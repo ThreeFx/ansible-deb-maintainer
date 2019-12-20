@@ -7,7 +7,7 @@
 - name: Install debian helper scripts
   become: True
   apt:
-    packages:
+    package:
       - debhelper
       - devscripts
     install_recommends: no
