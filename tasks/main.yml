@@ -1,0 +1,18 @@
+---
+- name: Fail when deb_maintainer_email unset or deb_maintainer_fullname unset
+  fail:
+    msg: You must set deb_maintainer_email and deb_maintainer_fullname
+  when: (deb_maintainer_email | length == 0) or (deb_maintainer_fullname | length == 0)
+
+- name: Install debian helper scripts
+  become: True
+  apt:
+    packages:
+      - debhelper
+      - devscripts
+    install_recommends: no
+
+- name: Configure DEBFULLNAME and DEBEMAIL
+  template:
+    src: 30-deb-maintainer.j2
+    dest: ~/.zshrc.d/30-deb-maintainer
